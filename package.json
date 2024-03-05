@@ -1,0 +1,22 @@
+{
+  "name": "nguyenhoangphi_pc05786_notejs_we18303",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phinhpc05786/nguyenHoangPhi_PC05786_NoteJs_WE18303.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phinhpc05786/nguyenHoangPhi_PC05786_NoteJs_WE18303/issues"
+  },
+  "homepage": "https://github.com/phinhpc05786/nguyenHoangPhi_PC05786_NoteJs_WE18303#readme",
+  "dependencies": {
+    "express": "^4.18.3"
+  }
+}
