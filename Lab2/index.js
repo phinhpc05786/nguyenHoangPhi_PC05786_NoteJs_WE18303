@@ -143,7 +143,7 @@ app.get("/product/:id", (req, res) => {
 });
 
 
-// console.log(comments);
+console.log(comments);
 app.post("/product/:id", (req, res) => {
     let newInventor = req.body;
     const comments = [{ id: 1, idPro: 1, moTa: "1111" }];
