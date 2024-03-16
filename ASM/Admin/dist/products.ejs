@@ -1,0 +1,44 @@
+<%- include('header1') %>
+
+	<!-- Sản phẩm ở đây -->
+	<div class="container">
+
+		<h2>Product List</h2>
+		<button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#addModal">
+			ADD
+		</button>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Image</th>
+					<th>Title</th>
+					<th>Price</th>
+					<th>Cate</th>
+					<th>Description</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% for (const e of products) {  %>
+				<tr>
+					<td><img src="../src/media/logos/<%= e.img %>" alt=""></td>
+					<td><%= e.title %></td>
+					<td><%= e.price %></td>
+					<td><%= e.cate%></td>
+					<td><%= e.description%></td>
+					<td> <button type="button" class="btn btn-success" style="margin-top: -15px;" data-toggle="modal"
+							data-target="#editModal">
+							Edit
+						</button>
+
+						<button type="button" class="btn btn-danger" style="margin-top: -15px;" data-toggle="modal"
+							data-target="#deleteModal">
+							Delete
+						</button>
+					</td>
+				</tr>
+				<% } %>
+			</tbody>
+		</table>
+	</div>
+	<%- include('footer1') %>

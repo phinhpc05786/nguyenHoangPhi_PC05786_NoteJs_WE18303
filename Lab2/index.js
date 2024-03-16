@@ -8,8 +8,7 @@ const uploads = multer({ dest: './public/data/uploads/'})
 
 app.use(bodyParser.urlencoded());
 app.use(express.static("public"));
-// var jsonParser = bodyParser.json();
-// routes
+
 app.set("view engine", "ejs");
 app.set("views", "./view");
 

@@ -1,0 +1,51 @@
+<%- include('header1') %>
+
+	<!-- Sản phẩm ở đây -->
+	<div class="container">
+		<h2>User list</h2>
+		<button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#addModal">
+			ADD
+		</button>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Img</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Phone</th>
+					<th>Description</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% for (const e of users) { %>
+					<tr>
+						<td><img src="<%= e.img %>" alt=""></td>
+						<td>
+							<%= e.name %>
+						</td>
+						<td>
+							<%= e.email %>
+						</td>
+						<td>
+							<%= e.phone %>
+						</td>
+						<td>
+							<%= e.description %>
+						</td>
+						<td> <button type="button" class="btn btn-success" style="margin-top: -15px;"
+								data-toggle="modal" data-target="#editModal">
+								Edit
+							</button>
+
+							<button type="button" class="btn btn-danger" style="margin-top: -15px;" data-toggle="modal"
+								data-target="#deleteModal">
+								Delete
+							</button>
+						</td>
+					</tr>
+					<% } %>
+			</tbody>
+		</table>
+	</div>
+	<%- include('footer1') %>
