@@ -1,0 +1,62 @@
+<!-- add-product.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Product</title>
+  <!-- Thêm các thư viện CSS cho Bootstrap và giao diện người dùng -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="mb-4">Add New Product</h1>
+
+    <!-- Form để thêm sản phẩm mới -->
+    <form method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" class="form-control" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="productImage">Product Image:</label>
+        <input type="file" id="productImage" name="productImage" class="form-control-file" accept="image/*" required>
+      </div>
+
+      <!-- Thêm một trình soạn thảo văn bản cho mô tả -->
+      <div class="form-group">
+        <label for="richTextDescription">Rich Text Description:</label>
+        <textarea id="richTextDescription" name="richTextDescription" class="form-control"></textarea>
+      </div>
+
+      <!-- Thêm nút submit và nút quay lại với lớp Bootstrap -->
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Add Product</button>
+        <a href="/products" class="btn btn-secondary">Back to Shop</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Thêm các script để sử dụng trình soạn thảo văn bản (ví dụ: CKEditor) -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/45.0.0/classic/ckeditor.js"></script>
+
+
+  <!-- Thêm các thư viện JavaScript của Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
