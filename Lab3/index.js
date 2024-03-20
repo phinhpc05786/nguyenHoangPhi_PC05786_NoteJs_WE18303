@@ -1,15 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const mysql = require('mysql');
+const mysql = require("mysql");
 const multer = require("multer");
 const app = express();
 const port = 3300;
+const upload = multer({ dest: "uploads/" });
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root', 
-  password: 'mysql',
-  database: 'mydb'
+  host: "localhost",
+  user: "root",
+  password: "mysql",
+  database: "mydb",
 });
 
 app.use(bodyParser.urlencoded());
@@ -18,109 +19,87 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", "./view");
 
-
-const listProduct = [
-  {
-    id: 1,
-    title: "Apple Book",
-    price: 3000,
-    description:
-      "A very interesting book about so many even more interesting things!",
-    imageURL: "",
-  },
-  {
-    id: 2,
-    title: "VFast Book",
-    price: 1000,
-    description:
-      "A very interesting book about so many even more interesting things!",
-    imageURL: "",
-  }
-];
-
-
 app.get("/", (req, res) => {
-  let sql = `SELECT * FROM products`;
-  connection.query(sql, function (err, data) {
-    if (err) {
-      throw err;
-    }else {
-      console.log(data);
-      res.render('home.ejs',{products: data});
-    }})
-})
+  let sqlProducts = `SELECT * FROM products`;
+  let sqlCatalogs = `SELECT * FROM categories`;
 
-app.get("/products", (req, res) => {
-  res.render("products.ejs", { products:data });
+  connection.query(sqlProducts, (errProducts, products) => {
+    if (errProducts) {
+      console.error("Error fetching products:", errProducts);
+      res.status(500).send("Internal Server Error products");
+      return;
+    }
+
+    connection.query(sqlCatalogs, (errCatalogs, categories) => {
+      if (errCatalogs) {
+        console.error("Error fetching catalogs:", errCatalogs);
+        res.status(500).send("Internal Server Error catalogs");
+        return;
+      }
+
+      res.render("home", { categories: categories, products: products });
+    });
+  });
+});
+
+app.get("/shop/:id", (req, res) => {
+  let cateId = req.params.id;
+
+  let sql = `SELECT * FROM products WHERE Category_id = ?`;
+  let sqlCatalogs = `SELECT * FROM categories`;
+
+  connection.query(sql, cateId, function (err, products) {
+    if (err) {
+      console.error("Error fetching data:", err);
+      res.status(500).send("Internal Server Error haha");
+      return;
+    }
+
+    connection.query(sqlCatalogs, (errCatalogs, categories) => {
+      if (errCatalogs) {
+        console.error("Error fetching catalogs:", errCatalogs);
+        res.status(500).send("Internal Server Error catalogs");
+        return;
+      }
+
+      // Render template khi đã lấy được cả dữ liệu sản phẩm và danh mục thành công
+      res.render("products", { products: products, categories: categories });
+    });
+  });
 });
 
 
-
-// Định nghĩa route để hiển thị trang thêm sản phẩm
 app.get("/addnew", (req, res) => {
   res.render("add-product");
 });
 
+//  thêm sản phẩm
+app.post("/addnew", upload.single("productImage"), (req, res) => {
+  const file = req.file;
+  const name = req.body.productName || "Default Product Name"; // Gán giá trị mặc định cho trường productName
+  const img = file ? file.filename : "default-image.jpg"; // Sử dụng ảnh mặc định nếu không có file được tải lên
+  const price = req.body.price || 0; // Gán giá trị mặc định cho trường price
+  const shortDescription = req.body.description || "No description provided"; // Gán giá trị mặc định cho trường description
+  const cateId = req.body.categoryId || 1; // Gán giá trị mặc định cho trường categoryId
 
-// Cấu hình lưu trữ file
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public/img");
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix+file.originalname); // Giữ nguyên tên tệp tin gốc
-  },
-});
+  // Tạo một chuỗi SQL với placeholder
+  const sql = `INSERT INTO products (name, short_desciption, img, price, Category_id) 
+               VALUES (?, ?, ?, ?, ?)`;
 
+  // Mảng giá trị sẽ thay thế các placeholder trong chuỗi SQL
+  const values = [name, shortDescription, img, price, cateId];
 
-// thêm product
-// Cấu hình Multer với lưu trữ đã được thiết lập
-const upload = multer({ storage: storage });
-
-// Xử lý POST request khi thêm sản phẩm mới
-app.post('/addnew', upload.single('productImage'), (req, res) => {
-  try {
-    // Kiểm tra xem đã có file được upload chưa
-    if (!req.file) {
-      throw new Error('Không có file được tải lên.');
+  // Thực hiện truy vấn SQL
+  connection.query(sql, values, (err, result) => {
+    if (err) {
+      console.error("Error inserting product:", err);
+      res.status(500).send("Internal Server Error hihi");
+      return;
     }
-
-    // Lấy tên tệp tin hình ảnh
-    const imageName = req.file.originalname;
-
-    // Thêm tên tệp tin hình ảnh vào mảng
-    listProduct.push({
-      imageURL: imageName,
-    });
-
-    // Trích xuất dữ liệu từ form
-    const { productName, price, description } = req.body;
-
-    // Thêm các thông tin khác vào mảng
-    listProduct[listProduct.length - 1].title = productName;
-    listProduct[listProduct.length - 1].price = price;
-    listProduct[listProduct.length - 1].description = description;
-
-    // Chuyển hướng về trang cửa hàng
-    res.redirect('/products');
-  } catch (error) {
-    // Xử lý lỗi (ví dụ: log lỗi hoặc hiển thị trang lỗi)
-    console.error(error);
-    res.status(500).send('Lỗi Server Nội bộ');
-  }
+    console.log("Product added successfully!");
+    res.redirect("/");
+  });
 });
-
-// chi tiết
-app.get('/products/:id', (req, res) => {
-  const productId = parseInt(req.params.id);
-  const product = listProduct.find(item => item.id === productId);
-
-  // Render the product detail template with the product data
-  res.render('product-detail', { product });
-});
-
-// Other routes and middleware...
 
 // Start the server
 app.listen(port, () => {

@@ -14,39 +14,38 @@
     <h1 class="mb-4">Add New Product</h1>
 
     <!-- Form để thêm sản phẩm mới -->
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" action="/addnew">
       <div class="form-group">
         <label for="productName">Product Name:</label>
         <input type="text" id="productName" name="productName" class="form-control" required>
       </div>
-
+    
       <div class="form-group">
         <label for="price">Price:</label>
         <input type="number" id="price" name="price" class="form-control" required>
       </div>
-
+    
       <div class="form-group">
         <label for="description">Description:</label>
         <textarea id="description" name="description" class="form-control" required></textarea>
       </div>
-
+    
       <div class="form-group">
         <label for="productImage">Product Image:</label>
         <input type="file" id="productImage" name="productImage" class="form-control-file" accept="image/*" required>
       </div>
-
-      <!-- Thêm một trình soạn thảo văn bản cho mô tả -->
-      <div class="form-group">
-        <label for="richTextDescription">Rich Text Description:</label>
-        <textarea id="richTextDescription" name="richTextDescription" class="form-control"></textarea>
-      </div>
-
+    
+      <!-- Thêm trường input ẩn cho categoryId -->
+      <input type="hidden" id="categoryId" name="categoryId" value="1">
+    
       <!-- Thêm nút submit và nút quay lại với lớp Bootstrap -->
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Add Product</button>
-        <a href="/products" class="btn btn-secondary">Back to Shop</a>
+        <a href="/" class="btn btn-secondary">Back to Shop</a>
       </div>
     </form>
+    
+    
   </div>
 
   <!-- Thêm các script để sử dụng trình soạn thảo văn bản (ví dụ: CKEditor) -->
