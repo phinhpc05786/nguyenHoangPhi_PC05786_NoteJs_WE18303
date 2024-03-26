@@ -76,6 +76,7 @@ const listUser = [
         id: 1,
         name: "Phi",
         email: "AppleBook.email",
+        password: "123",
         phone: 3000,
         description: "A very interesting book about so many even more interesting things!",
         img: "",
@@ -84,6 +85,7 @@ const listUser = [
         id: 2,
         name: "Phảo",
         email: "AppleBook.email",
+        password: "123",
         phone: 3000,
         description: "A very interesting book about so many even more interesting things!",
         img: "",
@@ -133,8 +135,20 @@ app.get("/chackout", (req, res) => {
     res.render(clientViewsPath + "chackout.ejs");
 });
 
-app.get("/shop-detail", (req, res) => {
-    res.render(clientViewsPath + "shop-detail.ejs");
+app.get("/shop-detail/:id", (req, res) => {
+    // Lấy giá trị của id từ đường dẫn
+    const productId = req.params.id;
+
+    // Tìm sản phẩm trong danh sách sản phẩm dựa trên productId
+    const product = listProduct.find(product => product.id === parseInt(productId));
+
+    if (product) {
+        // Nếu sản phẩm tồn tại, render trang chi tiết sản phẩm và truyền thông tin sản phẩm vào template
+        res.render(clientViewsPath + "shop-detail.ejs", { product: product, cates: listCate });
+    } else {
+        // Nếu không tìm thấy sản phẩm, có thể hiển thị trang 404 hoặc thông báo lỗi khác
+        res.status(404).send("Sản phẩm không tồn tại");
+    }
 });
 
 app.get("/shop", (req, res) => {
@@ -144,11 +158,51 @@ app.get("/shop", (req, res) => {
 app.get("/login", (req, res) => {
     res.render(clientViewsPath + "clientLogin.ejs");
 });
+app.post('/', (req, res) => {
+    // Lấy dữ liệu từ body của yêu cầu
+    const { name, password } = req.body;
+
+    console.log(name, password);
+
+    // Kiểm tra thông tin đăng nhập
+    const user = listUser.find(user => user.name === name && user.password === password);
+    if (user) {
+        // Nếu đăng nhập thành công, gửi thông tin người dùng về phía client để lưu vào local storage
+        // Render trang clientLogin.ejs với dữ liệu người dùng được truyền vào
+        res.render(clientViewsPath + "index.ejs", { products: listProduct, cates: listCate, user: user });
+    } else {
+        res.status(401).send("Invalid username or password");
+    }
+});
+app.get('/logout', (req, res) => {
+    user = undefined; 
+    res.redirect('/login'); // Chuyển hướng đến trang đăng nhập
+});
 
 app.get("/register", (req, res) => {
     res.render(clientViewsPath + "register.ejs");
 });
-
+app.post('/register', (req, res) => {
+    // Lấy dữ liệu từ body của yêu cầu
+    const { name, email, phone, description, img,password } = req.body;
+  
+    // Tạo một đối tượng người dùng mới
+    const newUser = { 
+      id: listUser.length + 1,
+      password,
+      name,
+      email,
+      phone,
+      description,
+      img
+    };
+  
+    // Thêm người dùng mới vào mảng listUser
+    listUser.push(newUser);
+  
+    // Gửi phản hồi về cho người dùng
+    res.render(clientViewsPath + "clientLogin.ejs");
+  });
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

@@ -76,11 +76,11 @@ app.get("/addnew", (req, res) => {
 //  thêm sản phẩm
 app.post("/addnew", upload.single("productImage"), (req, res) => {
   const file = req.file;
-  const name = req.body.productName || "Default Product Name"; // Gán giá trị mặc định cho trường productName
-  const img = file ? file.filename : "default-image.jpg"; // Sử dụng ảnh mặc định nếu không có file được tải lên
-  const price = req.body.price || 0; // Gán giá trị mặc định cho trường price
-  const shortDescription = req.body.description || "No description provided"; // Gán giá trị mặc định cho trường description
-  const cateId = req.body.categoryId || 1; // Gán giá trị mặc định cho trường categoryId
+  const name = req.body.productName || "Default Product Name"; 
+  const img = file ? file.filename : "default-image.jpg"; 
+  const price = req.body.price || 0; 
+  const shortDescription = req.body.description || "No description provided"; 
+  const cateId = req.body.categoryId || 1; 
 
   // Tạo một chuỗi SQL với placeholder
   const sql = `INSERT INTO products (name, short_desciption, img, price, Category_id) 

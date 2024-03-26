@@ -8,24 +8,28 @@
               <div class="card-body p-5 text-center">
 
                 <h3 class="mb-5">Register</h3>
+                <form action="/register" method="post">
+                  <div class="form-outline mb-4">
+                    <input type="text" name="name" placeholder="Name" id="typeEmailX-2" class="form-control form-control-lg" />
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input type="email" name="email" placeholder="Email" id="typeEmailX-2" class="form-control form-control-lg" />
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input type="password" name="password" placeholder="Password" id="typePasswordX-2" class="form-control form-control-lg" />
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input type="password" name="cpassword" placeholder="Confirm Password" id="typePasswordX-2" class="form-control form-control-lg" />
+                  </div>
+                
+                  <div class="form-check d-flex justify-content-start mb-4">
+                    <a href="/login">Login?</a>
+                  </div>
+                
+                  <button class="btn btn-primary btn-lg btn-block" type="submit">Register</button>
+                </form>
+                
 
-                <div class="form-outline mb-4">
-                  <input type="text" placeholder="Name" id="typeEmailX-2" class="form-control form-control-lg" />
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="email" placeholder="Email" id="typeEmailX-2" class="form-control form-control-lg" />
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="password" placeholder="Password" id="typePasswordX-2"
-                    class="form-control form-control-lg" />
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="cpassword" placeholder="Confim Password" id="typePasswordX-2"
-                    class="form-control form-control-lg" />
-                </div>
-
-
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
 
 
               </div>
