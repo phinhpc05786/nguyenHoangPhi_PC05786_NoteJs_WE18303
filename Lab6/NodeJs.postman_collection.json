@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "48c62bb6-681f-459f-a84a-38f7b8a6d353",
+		"name": "NodeJs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32590071"
+	},
+	"item": [
+		{
+			"name": "Product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_URL}}/api/products",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Mẫn cầu",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "455",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "1sfasfa",
+							"type": "text"
+						},
+						{
+							"key": "img",
+							"type": "file",
+							"src": "/C:/Users/LENOVO/Downloads/1.drawio.png"
+						},
+						{
+							"key": "cate",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{API_URL}}/api/products",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

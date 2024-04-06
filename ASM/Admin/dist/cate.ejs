@@ -1,11 +1,11 @@
-<%- include('header1') %>
+<%- include('./header-footer/header1') %>
 
 		<!-- Sản phẩm ở đây -->
 <div class="container">
 	<h2>Cate list</h2>
-	<button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#addModal">
+	<a href="/addCate" class="btn btn-primary m-3" data-toggle="modal" data-target="#addModal">
 		ADD
-	  </button>
+	  </a>
 	<table class="table">
 	  <thead>
 		<tr>
@@ -16,24 +16,28 @@
 		</tr>
 	  </thead>
 	  <tbody>
-			<% for (const e of cates) { %>
+		<% for (const e of cates) { %>
 			<tr>
 				<td><%= e.id %></td>
 				<td><%= e.name %></td>
 				<td><%= e.description %></td>
-				<td> <button type="button" class="btn btn-success" style="margin-top: -15px;" data-toggle="modal" data-target="#editModal">
-					Edit
-				  </button>
-
-				  <button type="button" class="btn btn-danger" style="margin-top: -15px;" data-toggle="modal" data-target="#deleteModal">
-					Delete
-				  </button></td>
-			  </tr>
-		<% } %>
+				<td class="d-flex mr-1">
+					<a href="/formEditCate/<%= e.id %>" method="post">
+						<input type="hidden" name="id" value="<%= e.id %>">
+						<button type="submit" class="btn btn-success" style="margin-top: -15px;">Edit</button>
+					</a>
+					<form action="/deleteCate/delete/<%= e.id %>" method="post">
+						<input type="hidden" name="id" value="<%= e.id %>">
+						<button type="submit" class="btn btn-danger" style="margin-top: -15px;">Delete</button>
+					</form>
+				</td>
+			</tr>
+			<% } %>
+			
 	  </tbody>
 	</table>
   </div>
-<%- include('footer1') %>
+<%- include('./header-footer/footer1') %>
 
 
 

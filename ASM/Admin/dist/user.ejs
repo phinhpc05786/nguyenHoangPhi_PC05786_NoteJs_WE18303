@@ -1,11 +1,11 @@
-<%- include('header1') %>
+<%- include('./header-footer/header1') %>
 
 	<!-- Sản phẩm ở đây -->
 	<div class="container">
 		<h2>User list</h2>
-		<button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#addModal">
+		<a href="/addUser" class="btn btn-primary m-3" data-toggle="modal" data-target="#addModal">
 			ADD
-		</button>
+		</a>
 		<table class="table">
 			<thead>
 				<tr>
@@ -13,39 +13,36 @@
 					<th>Name</th>
 					<th>Email</th>
 					<th>Phone</th>
-					<th>Description</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<% for (const e of users) { %>
+				<% for (const user of users) { %>
 					<tr>
-						<td><img src="<%= e.img %>" alt=""></td>
+						<td><img src="<%= user.img %>" alt="" style="max-width: 100px;"></td>
 						<td>
-							<%= e.name %>
+							<%= user.name %>
 						</td>
 						<td>
-							<%= e.email %>
+							<%= user.email %>
 						</td>
 						<td>
-							<%= e.phone %>
+							<%= user.phone %>
 						</td>
-						<td>
-							<%= e.description %>
-						</td>
-						<td> <button type="button" class="btn btn-success" style="margin-top: -15px;"
-								data-toggle="modal" data-target="#editModal">
-								Edit
-							</button>
-
-							<button type="button" class="btn btn-danger" style="margin-top: -15px;" data-toggle="modal"
-								data-target="#deleteModal">
-								Delete
-							</button>
+						<td class="d-flex mr-1">
+							<a href="/editUser/<%= user.id %>" method="post">
+								<input type="hidden" name="id" value="<%= user.id %>">
+								<button type="submit" class="btn btn-success" style="margin-top: -15px;">Edit</button>
+							</a>
+							<form action="/adminUser/delete/<%= user.id %>" method="post">
+								<input type="hidden" name="id" value="<%= user.id %>">
+								<button type="submit" class="btn btn-danger" style="margin-top: -15px;">Delete</button>
+							</form>
 						</td>
 					</tr>
 					<% } %>
 			</tbody>
+
 		</table>
 	</div>
-	<%- include('footer1') %>
+	<%- include('./header-footer/footer1') %>

@@ -1,17 +1,17 @@
-<%- include('header1') %>
+<%- include('./header-footer/header1') %>
 
 	<!-- Sản phẩm ở đây -->
 	<div class="container">
 
 		<h2>Product List</h2>
-		<button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#addModal">
+		<a href="/addProduct" class="btn btn-primary m-3" data-toggle="modal" data-target="#addModal">
 			ADD
-		</button>
+		</a>
 		<table class="table">
 			<thead>
 				<tr>
 					<th>Image</th>
-					<th>Title</th>
+					<th>Name</th>
 					<th>Price</th>
 					<th>Cate</th>
 					<th>Description</th>
@@ -19,26 +19,31 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% for (const e of products) {  %>
-				<tr>
-					<td><img src="../src/media/logos/<%= e.img %>" alt=""></td>
-					<td><%= e.title %></td>
-					<td><%= e.price %></td>
-					<td><%= e.cate%></td>
-					<td><%= e.description%></td>
-					<td> <button type="button" class="btn btn-success" style="margin-top: -15px;" data-toggle="modal"
-							data-target="#editModal">
-							Edit
-						</button>
-
-						<button type="button" class="btn btn-danger" style="margin-top: -15px;" data-toggle="modal"
-							data-target="#deleteModal">
-							Delete
-						</button>
-					</td>
-				</tr>
-				<% } %>
+				<% for (const e of products) { %>
+					<tr>
+						<td><img src="../../public/data/uploads/<% e.img %>" alt=""></td>
+						<td>
+							<%= e.name %>
+						</td>
+						<td>
+							<%= e.price %>
+						</td>
+						<td>
+							<%= e.cate%>
+						</td>
+						<td>
+							<%= e.description%>
+						</td>
+						<td class="d-flex mr-1">
+								<a href="/editPro/<%= e.id %>" type="submit" class="btn btn-success" style="margin-top: -15px;">Edit</a>
+							<form action="/adminShop/delete/<%= e.id %>" method="post">
+								<input type="hidden" name="id" value="<%= e.id %>">
+								<button type="submit" class="btn btn-danger" style="margin-top: -15px;">Delete</button>
+							</form>
+						</td>
+					</tr>
+					<% } %>
 			</tbody>
 		</table>
 	</div>
-	<%- include('footer1') %>
+	<%- include('./header-footer/footer1') %>
